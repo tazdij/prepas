@@ -30,3 +30,29 @@ end.
 ```
 
 #### Conditionals
+
+One of my primary, esthetic objections to Pascal is the usage of begin and end (unlike other, I think the use of semi colons make perfect sense). I think it is easier when scanning, to see scoped blocks of code deliniated with Braces, instead of words. Now this does cause a little issue, that the brace is a comment. So, the parse needs to to be a little smart. I am not entirely sure, if I can pull this one off yet.
+
+```
+program ppc;
+
+// These are directives
+{$MODE OBJFPC}{$H+}
+
+// Compiler constants
+{$DEFINE MY_OVER override}
+
+uses System, Classes;
+
+begin
+
+var a : Int32 = 0;
+
+if (a <> 0) {
+  WriteLn('We have a really big problem');
+} else {
+  WriteLn('Hello Sane World!');
+};
+
+end.
+```
