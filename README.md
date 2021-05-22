@@ -56,3 +56,51 @@ if (a <> 0) {
 
 end.
 ```
+
+#### Enumerations
+
+Pascal enums are super featureful, with automatic Bitmasking and "Set" operations. You can pretty much forget about having to manually shift bits, and use bitwise math, to match enums to values. This is all built into the language and syntax. But it lacks one of the most useful features that I can think of. It does not namespace Options/Values of and Enum to the definition, such as C# and I think recent versions on C++. While they are namespaced to the unit (which is a little better) It is often the case that another similar enum in the same unit, has already used the identifier that you need. (fpc does have a directive for scopedenums)
+
+```
+unit datelib;
+
+type
+  EDayOfWeek = enum
+    Monday = 1;
+    Tuesday = 2;
+    Wednesday = 3;
+    Thursday = 4;
+    Friday = 5;
+    Saturday = 6;
+    Sunday = 0;
+  end;
+  
+  EDayOfWeekOptions = enum
+    Monday;
+    Tuesday;
+    Wednesday;
+    Thursday;
+    Friday;
+    Saturday;
+    Sunday;
+  end;
+  
+function GetDayOfWeek() : EDayOfWeek;
+begin
+  // do some internal logic to determine day of week
+  Result := EDayOfWeek.Monday;
+end;
+ 
+function SetDaysOpen(days : set of EDayOfWeekOptions) : Boolean;
+begin
+   
+end;
+
+// Call Example
+// The type is infered by the functions declaration.
+// As long as we don't overload a function with the set of both enum types, it will not be ambiguous. And, type solving will be possible.
+
+SetDaysOpen([EDayOfWeekOptions.Monday, Tuesday, Wednesday, Thursday]);
+
+end.
+```
